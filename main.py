@@ -56,24 +56,21 @@ def largest_connected_component(graph):
     """
     Find the largest connected component in the graph using DFS.
     """
-    # Initialize set to keep track of visited vertices
     visited = set()
-
-    # Initialize variable to store the largest connected component
     largest_component = []
-
-    # Traverse all vertices in the graph
     for vertex in graph:
         if vertex not in visited:
-            # Initialize list to store vertices of the connected component
             component = []
-            # Find the connected component starting from this vertex
             dfs(graph, visited, vertex, component)
-            # Update largest_component if necessary
             if len(component) > len(largest_component):
                 largest_component = component
 
-    return largest_component
+    # Create a new graph containing only edges within the largest connected component
+    lcc_graph = {}
+    for vertex in largest_component:
+        lcc_graph[vertex] = [v for v in graph[vertex] if v in largest_component]
+
+    return lcc_graph
 
 # Binary search to find the maximum distance r for the given constraints
 def binary_search_r(n, min_ratio, max_ratio):
